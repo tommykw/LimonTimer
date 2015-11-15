@@ -3,11 +3,13 @@ package tokyo.tommykw.limontimer.presenter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 /**
  * Created by tommy on 15/11/15.
  */
 public class TimerPresenter extends Presenter {
+    public static final String TAG = TimerPresenter.class.getSimpleName();
     private CountDownTimer countDownTimer;
     private long startTime;
     private long interval;
@@ -16,8 +18,8 @@ public class TimerPresenter extends Presenter {
     private static final String ARG_KEY_INTERVAL = "interval";
 
     public interface TimerListener {
-        void onFinish();
         void onTick(long millisUntilFinished);
+        void onFinish();
     }
 
     public static TimerPresenter newInstance(long startTime, long interval) {
@@ -32,9 +34,10 @@ public class TimerPresenter extends Presenter {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            startTime = savedInstanceState.getLong(ARG_KEY_START_TIME);
-            interval = savedInstanceState.getLong(ARG_KEY_INTERVAL);
+        Bundle args = getArguments();
+        if (args != null) {
+            startTime = args.getLong(ARG_KEY_START_TIME);
+            interval = args.getLong(ARG_KEY_INTERVAL);
         }
     }
 
@@ -49,12 +52,12 @@ public class TimerPresenter extends Presenter {
             countDownTimer = new CountDownTimer(startTime, interval) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    //listener.onTick(millisUntilFinished);
+                    listener.onTick(millisUntilFinished);
                 }
 
                 @Override
                 public void onFinish() {
-                    //listener.onFinish();
+                    listener.onFinish();
                 }
             };
         }

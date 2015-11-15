@@ -1,7 +1,8 @@
 package tokyo.tommykw.limontimer.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -13,6 +14,9 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.timer)
     TextView timer;
 
+    @Bind(R.id.timer_button)
+    Button timerButton;
+
     private static final int START_TIME = 10000;
     private static final int INTERVAL = 100;
     private TimerPresenter timerPresenter;
@@ -22,11 +26,30 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timer.setText(String.valueOf(START_TIME));
-        timerPresenter = TimerPresenter.newInstance(START_TIME, INTERVAL);
+        timerPresenter = getTimerPresenter();
     }
 
     @OnClick(R.id.timer_button)
-    public void onTimerButtonClick(View v) {
-        timerPresenter.startTimer(null);
+    public void onTimerButtonClick() {
+        timerPresenter.startTimer(new TimerPresenter.TimerListener() {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timer.setText(String.valueOf(millisUntilFinished));
+            }
+            @Override
+            public void onFinish() {
+                timer.setText("0");
+            }
+        });
+    }
+
+    private TimerPresenter getTimerPresenter() {
+        TimerPresenter presenter = (TimerPresenter)getSupportFragmentManager().findFragmentByTag(TimerPresenter.TAG);
+        if (presenter == null) {
+            presenter = TimerPresenter.newInstance(START_TIME, INTERVAL);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(presenter, TimerPresenter.TAG).commit();
+        }
+        return presenter;
     }
 }
