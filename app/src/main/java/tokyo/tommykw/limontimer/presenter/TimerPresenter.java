@@ -13,6 +13,7 @@ public class TimerPresenter extends Presenter {
     private CountDownTimer countDownTimer;
     private long startTime;
     private long interval;
+    private long currentTime;
     private boolean isRunning = false;
     private boolean isFinished = false;
     private boolean isStopped = false;
@@ -55,6 +56,7 @@ public class TimerPresenter extends Presenter {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     listener.onTick(millisUntilFinished);
+                    currentTime = millisUntilFinished;
                 }
 
                 @Override
@@ -97,5 +99,9 @@ public class TimerPresenter extends Presenter {
 
     public boolean isFinished() {
         return isFinished;
+    }
+
+    public long getCurrentTime() {
+        return currentTime;
     }
 }
