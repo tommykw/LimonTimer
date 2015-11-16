@@ -1,6 +1,8 @@
 package tokyo.tommykw.limontimer.view.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.Button;
@@ -18,9 +20,13 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.timer_button)
     Button timerButton;
 
+    @Bind(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+
     private static final int START_TIME = 50000;
     private static final int INTERVAL = 1;
     private TimerPresenter timerPresenter;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         timer.setText(String.valueOf(START_TIME / 1000));
         timerPresenter = getTimerPresenter();
+        snackbar = Snackbar.make(coordinatorLayout, null, Snackbar.LENGTH_LONG);
     }
 
     @OnClick(R.id.timer_button)
@@ -35,11 +42,14 @@ public class MainActivity extends BaseActivity {
         if (timerPresenter.isRunning()) {
             timerPresenter.stopTimer();
             timerButton.setText("START");
+            snackbar.setText("STOP").show();
         } else if (timerPresenter.isStopped() && !timerPresenter.isFinished()) {
             timerPresenter.restartTimer();
             timerButton.setText("STOP");
+            snackbar.setText("START").show();
         } else {
             timerButton.setText("STOP");
+            snackbar.setText("START").show();
             timerPresenter.startTimer(new TimerPresenter.TimerListener() {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -49,6 +59,7 @@ public class MainActivity extends BaseActivity {
                 public void onFinish() {
                     timer.setText("0");
                     timerButton.setText("RESET");
+                    snackbar.setText("FINISH").show();
                 }
             });
         }
