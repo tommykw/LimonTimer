@@ -14,6 +14,8 @@ public class TimerPresenter extends Presenter {
     private long startTime;
     private long interval;
     private boolean isRunning = false;
+    private boolean isFinished = false;
+    private boolean isStopped = false;
     private static final String ARG_KEY_START_TIME = "start_time";
     private static final String ARG_KEY_INTERVAL = "interval";
 
@@ -58,28 +60,42 @@ public class TimerPresenter extends Presenter {
                 @Override
                 public void onFinish() {
                     listener.onFinish();
+                    isFinished = true;
+                    isRunning = false;
+                    isStopped = true;
                 }
             };
         }
         countDownTimer.start();
         isRunning = true;
+        isStopped = false;
     }
 
     public void stopTimer() {
         if (countDownTimer != null) {
-            countDownTimer.onFinish();
-        }
-        isRunning = false;
-    }
-
-    public void cancelTimer() {
-        if (countDownTimer != null) {
             countDownTimer.cancel();
         }
         isRunning = false;
+        isStopped = true;
+    }
+
+    public void restartTimer() {
+        if (countDownTimer != null) {
+            countDownTimer.start();
+        }
+        isRunning = true;
+        isStopped = false;
     }
 
     public boolean isRunning() {
         return isRunning;
+    }
+
+    public boolean isStopped() {
+        return isStopped;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
     }
 }
