@@ -3,8 +3,6 @@ package tokyo.tommykw.limontimer.view.activity;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -43,14 +41,24 @@ public class MainActivity extends BaseActivity {
             timerPresenter.stopTimer();
             timerButton.setText("START");
             snackbar.setText("STOP").show();
-        } else if (timerPresenter.isStopped() && !timerPresenter.isFinished()) {
-            timerPresenter.restartTimer();
-            timerButton.setText("STOP");
-            snackbar.setText("START").show();
+        } else if (timerPresenter.isFinished()) {
+            timerPresenter.resetTimer();
+            timer.setText(String.valueOf(START_TIME / 1000));
+            timerButton.setText("START");
+            snackbar.setText("RESET").show();
         } else {
+            timerPresenter.startTimer();
             timerButton.setText("STOP");
             snackbar.setText("START").show();
-            timerPresenter.startTimer(new TimerPresenter.TimerListener() {
+        }
+    }
+
+    private TimerPresenter getTimerPresenter() {
+        TimerPresenter presenter = (TimerPresenter)getSupportFragmentManager().findFragmentByTag(TimerPresenter.TAG);
+        if (presenter == null) {
+            presenter = TimerPresenter.newInstance(START_TIME, INTERVAL);
+            getSupportFragmentManager().beginTransaction().add(presenter, TimerPresenter.TAG).commit();
+            presenter.setTimerListener(new TimerPresenter.TimerListener() {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     timer.setText(String.valueOf(millisUntilFinished / 1000));
@@ -62,15 +70,6 @@ public class MainActivity extends BaseActivity {
                     snackbar.setText("FINISH").show();
                 }
             });
-        }
-    }
-
-    private TimerPresenter getTimerPresenter() {
-        TimerPresenter presenter = (TimerPresenter)getSupportFragmentManager().findFragmentByTag(TimerPresenter.TAG);
-        if (presenter == null) {
-            presenter = TimerPresenter.newInstance(START_TIME, INTERVAL);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(presenter, TimerPresenter.TAG).commit();
         }
         return presenter;
     }

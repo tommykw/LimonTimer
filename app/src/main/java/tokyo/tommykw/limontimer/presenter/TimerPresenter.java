@@ -2,7 +2,6 @@ package tokyo.tommykw.limontimer.presenter;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 /**
@@ -19,6 +18,7 @@ public class TimerPresenter extends Presenter {
     private boolean isStopped = false;
     private static final String ARG_KEY_START_TIME = "start_time";
     private static final String ARG_KEY_INTERVAL = "interval";
+    private TimerListener timerListener;
 
     public interface TimerListener {
         void onTick(long millisUntilFinished);
@@ -41,6 +41,7 @@ public class TimerPresenter extends Presenter {
         if (args != null) {
             startTime = args.getLong(ARG_KEY_START_TIME);
             interval = args.getLong(ARG_KEY_INTERVAL);
+            currentTime = startTime;
         }
     }
 
@@ -50,43 +51,42 @@ public class TimerPresenter extends Presenter {
         super.onDestroy();
     }
 
-    public void startTimer(@NonNull TimerListener listener) {
-        if (countDownTimer == null) {
-            countDownTimer = new CountDownTimer(startTime, interval) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    listener.onTick(millisUntilFinished);
-                    currentTime = millisUntilFinished;
-                }
+    public void setTimerListener(TimerListener listener) {
+        timerListener = listener;
+    }
 
-                @Override
-                public void onFinish() {
-                    listener.onFinish();
-                    isFinished = true;
-                    isRunning = false;
-                    isStopped = true;
-                }
-            };
-        }
+    public void startTimer() {
+        countDownTimer = new CountDownTimer(currentTime, interval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerListener.onTick(millisUntilFinished);
+                currentTime = millisUntilFinished;
+            }
+
+            @Override
+            public void onFinish() {
+                timerListener.onFinish();
+                isFinished = true;
+                isRunning = false;
+                isStopped = true;
+            }
+        };
         countDownTimer.start();
         isRunning = true;
         isStopped = false;
     }
 
     public void stopTimer() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+        countDownTimer.cancel();
         isRunning = false;
         isStopped = true;
     }
 
-    public void restartTimer() {
-        if (countDownTimer != null) {
-            countDownTimer.start();
-        }
-        isRunning = true;
-        isStopped = false;
+    public void resetTimer() {
+        isRunning = false;
+        isStopped = true;
+        isFinished = false;
+        currentTime = startTime;
     }
 
     public boolean isRunning() {
