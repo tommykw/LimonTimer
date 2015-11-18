@@ -21,11 +21,17 @@
             android:textSize="120sp"
             android:text="start"/>
 
-        <Button
-            android:id="@+id/timer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TIMER"/>
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple_timer_button_layout"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/timer_button"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="TIMER"/>
+        </com.balysv.materialripple.MaterialRippleLayout>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,10 +1,14 @@
 package tokyo.tommykw.limontimer.view.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.balysv.materialripple.MaterialRippleLayout;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -21,6 +25,9 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
+    @Bind(R.id.ripple_timer_button_layout)
+    View rippleTimerButtonLayout;
+
     private static final int START_TIME = 50000;
     private static final int INTERVAL = 1;
     private TimerPresenter timerPresenter;
@@ -33,6 +40,12 @@ public class MainActivity extends BaseActivity {
         timer.setText(String.valueOf(START_TIME / 1000));
         timerPresenter = getTimerPresenter();
         snackbar = Snackbar.make(coordinatorLayout, null, Snackbar.LENGTH_LONG);
+
+        MaterialRippleLayout.on(rippleTimerButtonLayout)
+                .rippleColor(Color.parseColor("#FF0000"))
+                .rippleAlpha(0.5f)
+                .rippleHover(true)
+                .create();
     }
 
     @OnClick(R.id.timer_button)
