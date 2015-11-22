@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private TimerPresenter timerPresenter;
     private Snackbar snackbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
