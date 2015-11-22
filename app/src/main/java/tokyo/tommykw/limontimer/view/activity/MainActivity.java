@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 
@@ -20,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
     private TimerPresenter timerPresenter;
     private Snackbar snackbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        Timer timer = new Timer(START_TIME, "START");
+        Timer timer = new Timer(START_TIME / 1000, "START");
         activityBinding.setTimer(timer);
-
-        timer.buttonText = String.valueOf(START_TIME / 1000);
+        activityBinding.timerButton.setOnClickListener(onClickTimerListener);
         timerPresenter = getTimerPresenter();
         snackbar = Snackbar.make(activityBinding.coordinatorLayout, null, Snackbar.LENGTH_LONG);
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 .create();
     }
 
-    public void onTimerButtonClick() {
+    private View.OnClickListener onClickTimerListener = (View v) -> {
         if (timerPresenter.isRunning()) {
             timerPresenter.stopTimer();
             activityBinding.timerButton.setText("START");
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             activityBinding.timerButton.setText("STOP");
             snackbar.setText("START").show();
         }
-    }
+    };
 
     private TimerPresenter getTimerPresenter() {
         TimerPresenter presenter = (TimerPresenter)getSupportFragmentManager().findFragmentByTag(TimerPresenter.TAG);
