@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        Timer timer = new Timer(START_TIME / 1000, "START");
+        Timer timer = new Timer(START_TIME / 1000, getString(R.string.timer_text_start));
         activityBinding.setTimer(timer);
         activityBinding.timerButton.setOnClickListener(onClickTimerListener);
         timerPresenter = getTimerPresenter();
@@ -42,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onClickTimerListener = (View v) -> {
         if (timerPresenter.isRunning()) {
             timerPresenter.stopTimer();
-            activityBinding.timerButton.setText("START");
-            snackbar.setText("STOP").show();
+            activityBinding.timerButton.setText(getString(R.string.timer_text_start));
+            snackbar.setText(getString(R.string.timer_text_stop)).show();
         } else if (timerPresenter.isFinished()) {
             timerPresenter.resetTimer();
             activityBinding.timer.setText(String.valueOf(START_TIME / 1000));
-            activityBinding.timerButton.setText("START");
-            snackbar.setText("RESET").show();
+            activityBinding.timerButton.setText(getString(R.string.timer_text_start));
+            snackbar.setText(getString(R.string.timer_text_reset)).show();
         } else {
             timerPresenter.startTimer();
-            activityBinding.timerButton.setText("STOP");
-            snackbar.setText("START").show();
+            activityBinding.timerButton.setText(getString(R.string.timer_text_stop));
+            snackbar.setText(getString(R.string.timer_text_start)).show();
         }
     };
 
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     activityBinding.timer.setText("0");
-                    activityBinding.timerButton.setText("RESET");
-                    snackbar.setText("FINISH").show();
+                    activityBinding.timerButton.setText(getString(R.string.timer_text_reset));
+                    snackbar.setText(getString(R.string.timer_text_finish)).show();
                 }
             });
         }
