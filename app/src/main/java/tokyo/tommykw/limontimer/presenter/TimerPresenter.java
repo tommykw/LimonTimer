@@ -2,13 +2,19 @@ package tokyo.tommykw.limontimer.presenter;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by tommy on 15/11/15.
  */
 public class TimerPresenter extends Presenter {
     public static final String TAG = TimerPresenter.class.getSimpleName();
+    private static final String ARG_KEY_START_TIME = "start_time";
+    private static final String ARG_KEY_INTERVAL = "interval";
     private CountDownTimer countDownTimer;
     private long startTime;
     private long interval;
@@ -16,8 +22,6 @@ public class TimerPresenter extends Presenter {
     private boolean isRunning = false;
     private boolean isFinished = false;
     private boolean isStopped = false;
-    private static final String ARG_KEY_START_TIME = "start_time";
-    private static final String ARG_KEY_INTERVAL = "interval";
     private TimerListener timerListener;
 
     public interface TimerListener {
@@ -34,21 +38,25 @@ public class TimerPresenter extends Presenter {
         return fragment;
     }
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
             startTime = args.getLong(ARG_KEY_START_TIME);
             interval = args.getLong(ARG_KEY_INTERVAL);
             currentTime = startTime;
         }
+
+        return null;
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         countDownTimer = null;
-        super.onDestroy();
+        timerListener = null;
+        super.onDestroyView();
     }
 
     public void setTimerListener(TimerListener listener) {
