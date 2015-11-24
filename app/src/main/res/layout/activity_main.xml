@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="timer" type="tokyo.tommykw.limontimer.model.Timer"/>
+        <variable name="timer" type="tokyo.tommykw.limontimer.model.entity.TimerEntity"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout

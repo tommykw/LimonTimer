@@ -5,13 +5,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import tokyo.tommykw.limontimer.R;
 import tokyo.tommykw.limontimer.databinding.ActivityMainBinding;
-import tokyo.tommykw.limontimer.model.Timer;
+import tokyo.tommykw.limontimer.model.entity.TimerEntity;
+import tokyo.tommykw.limontimer.model.storage.TimerStorage;
 import tokyo.tommykw.limontimer.presenter.TimerPresenter;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        Timer timer = new Timer(START_TIME / 1000, getString(R.string.timer_text_start));
+        TimerEntity timer = new TimerEntity(START_TIME / 1000, getString(R.string.timer_text_start));
         activityBinding.setTimer(timer);
         activityBinding.timerButton.setOnClickListener(onClickTimerListener);
         timerPresenter = getTimerPresenter();
