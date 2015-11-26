@@ -12,12 +12,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 /**
  * Created by tommy on 15/11/25.
  */
 public class LocalNotificationReceiver extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Integer primary_key = intent.getIntExtra("PRIMARY_KEY", 0);

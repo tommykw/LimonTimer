@@ -13,6 +13,7 @@ import tokyo.tommykw.limontimer.R;
 import tokyo.tommykw.limontimer.databinding.ActivityMainBinding;
 import tokyo.tommykw.limontimer.model.entity.TimerEntity;
 import tokyo.tommykw.limontimer.presenter.TimerPresenter;
+import tokyo.tommykw.limontimer.view.notification.LocalNotificationSender;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding activityBinding;
