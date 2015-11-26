@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
                     activityBinding.timer.setText("0");
                     activityBinding.timerButton.setText(getString(R.string.timer_text_reset));
                     snackbar.setText(getString(R.string.timer_text_finish)).show();
+                    LocalNotificationSender lnSender = new LocalNotificationSender(MainActivity.this);
+                    lnSender.sendNotification(0, 0, "timer", "Finish", "Finish");
                 }
             });
         }

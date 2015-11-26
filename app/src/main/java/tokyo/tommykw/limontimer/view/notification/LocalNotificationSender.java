@@ -17,7 +17,7 @@ public class LocalNotificationSender {
         this.context = context;
     }
 
-    public void sendNotification(long timestamp, int primaryKey, String ticker, String currentTitle, String currentText) {
+    public void sendNotification(int timestamp, int primaryKey, String ticker, String currentTitle, String currentText) {
         Context context = this.context.getApplicationContext();
         Intent intent = new Intent(context, LocalNotificationReceiver.class);
         intent.putExtra("PRIMARY_KEY", primaryKey);
@@ -27,7 +27,7 @@ public class LocalNotificationSender {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 5);
+        calendar.add(Calendar.SECOND, 0);
 
         PendingIntent sender = PendingIntent.getBroadcast(context, primaryKey, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);

@@ -12,7 +12,7 @@
             android:name="tokyo.tommykw.limontimer.view.activity.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
 
-        <receiver android:name=".view.notification.LocalNotificationReceiver" android:process=":remote"/>
+        <receiver android:name=".view.notification.LocalNotificationReceiver"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
