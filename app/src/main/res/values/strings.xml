@@ -69,5 +69,7 @@
     <string name="timer_text_stop">STOP</string>
     <string name="timer_text_reset">RESET</string>
     <string name="timer_text_finish">FINISH</string>
+    <string name="timer_notification_text">FINISH</string>
+    <string name="timer_notification_title">FINISH</string>
     <!-- timer -->
 </resources>

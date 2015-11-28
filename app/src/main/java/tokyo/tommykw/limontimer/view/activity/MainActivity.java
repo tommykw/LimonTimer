@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     activityBinding.timerButton.setText(getString(R.string.timer_text_reset));
                     snackbar.setText(getString(R.string.timer_text_finish)).show();
                     LocalNotificationSender lnSender = new LocalNotificationSender(MainActivity.this);
-                    lnSender.sendNotification(0, 0, "timer", "Finish", "Finish");
+                    lnSender.sendNotification(0, 0, "timer", getString(R.string.timer_notification_title), getString(R.string.timer_notification_text));
                 }
             });
         }
@@ -87,20 +87,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(SettingsActivity.makeIntent(this));
             return true;
         }
 
