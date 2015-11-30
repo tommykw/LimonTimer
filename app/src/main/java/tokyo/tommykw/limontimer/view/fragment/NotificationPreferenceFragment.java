@@ -3,6 +3,7 @@ package tokyo.tommykw.limontimer.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 import android.view.MenuItem;
 
 import tokyo.tommykw.limontimer.R;
@@ -12,6 +13,11 @@ import tokyo.tommykw.limontimer.view.activity.SettingsActivity;
  * Created by tommy on 15/11/29.
  */
 public class NotificationPreferenceFragment extends PreferenceFragment {
+    public static NotificationPreferenceFragment newInstance() {
+        NotificationPreferenceFragment fragment = new NotificationPreferenceFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
