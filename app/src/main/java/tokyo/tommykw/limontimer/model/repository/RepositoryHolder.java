@@ -11,6 +11,6 @@ import dagger.Component;
 //@Component(modules = {
 //        TimerRepository.class
 //})
-//public interface RepositoryHolder {
-//    TimerRepository getTimerRepository();
-//}
+public interface RepositoryHolder {
+    TimerRepository getTimerRepository();
+}
