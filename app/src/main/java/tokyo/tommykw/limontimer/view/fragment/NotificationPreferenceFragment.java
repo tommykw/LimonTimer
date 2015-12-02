@@ -13,6 +13,7 @@ import tokyo.tommykw.limontimer.view.activity.SettingsActivity;
  * Created by tommy on 15/11/29.
  */
 public class NotificationPreferenceFragment extends PreferenceFragment {
+    public NotificationPreferenceFragment() {}
     public static NotificationPreferenceFragment newInstance() {
         NotificationPreferenceFragment fragment = new NotificationPreferenceFragment();
         return fragment;

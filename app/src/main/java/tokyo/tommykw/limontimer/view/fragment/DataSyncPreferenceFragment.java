@@ -13,6 +13,7 @@ import tokyo.tommykw.limontimer.view.activity.SettingsActivity;
  * Created by tommy on 15/11/29.
  */
 public class DataSyncPreferenceFragment extends PreferenceFragment {
+    public DataSyncPreferenceFragment() {}
     public static DataSyncPreferenceFragment newInstance() {
         DataSyncPreferenceFragment fragment = new DataSyncPreferenceFragment();
         return fragment;

@@ -13,6 +13,7 @@ import tokyo.tommykw.limontimer.view.activity.SettingsActivity;
  * Created by tommy on 15/11/29.
  */
 public class GeneralPreferenceFragment extends PreferenceFragment {
+    public GeneralPreferenceFragment() {}
     public static GeneralPreferenceFragment newInstance() {
         GeneralPreferenceFragment fragment = new GeneralPreferenceFragment();
         return fragment;
