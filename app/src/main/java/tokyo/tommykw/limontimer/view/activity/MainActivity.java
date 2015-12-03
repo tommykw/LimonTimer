@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 
+import rx.Observable;
+import rx.subjects.PublishSubject;
 import tokyo.tommykw.limontimer.R;
 import tokyo.tommykw.limontimer.databinding.ActivityMainBinding;
 import tokyo.tommykw.limontimer.model.entity.TimerEntity;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int INTERVAL = 1;
     private TimerPresenter timerPresenter;
     private Snackbar snackbar;
+    private PublishSubject<Object> counterSubject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         activityBinding.timerButton.setOnClickListener(onClickTimerListener);
         timerPresenter = getTimerPresenter();
         snackbar = Snackbar.make(activityBinding.coordinatorLayout, null, Snackbar.LENGTH_LONG);
+        counterSubject = PublishSubject.create();
+        counterSubject.subscribe();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     activityBinding.timer.setText(String.valueOf(millisUntilFinished / 1000));
+                    counterSubject.onNext(String.valueOf(millisUntilFinished / 1000));
                 }
                 @Override
                 public void onFinish() {
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     snackbar.setText(getString(R.string.timer_text_finish)).show();
                     LocalNotificationSender lnSender = new LocalNotificationSender(MainActivity.this);
                     lnSender.sendNotification(0, 0, "timer", getString(R.string.timer_notification_title), getString(R.string.timer_notification_text));
+                    counterSubject.subscribe(System.out::println);
                 }
             });
         }
