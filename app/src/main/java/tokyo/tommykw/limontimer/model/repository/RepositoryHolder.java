@@ -9,7 +9,7 @@ import dagger.Component;
  */
 @Singleton
 @Component(modules = {
-        TimerRepository.class
+        RepositoryModule.class
 })
 public interface RepositoryHolder {
     TimerRepository getTimerRepository();

@@ -10,11 +10,8 @@ import tokyo.tommykw.limontimer.model.storage.TimerStorage;
  * Created by tommy on 15/11/24.
  */
 public class TimerRepository {
-    private TimerStorage timerStorage;
-
-    public TimerRepository(TimerStorage timerStorage) {
-        this.timerStorage = timerStorage;
-    }
+    @Inject
+    public TimerStorage timerStorage;
 
     public TimerStorage getTimerStorage() {
         return this.timerStorage;
