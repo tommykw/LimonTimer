@@ -3,9 +3,7 @@ package tokyo.tommykw.limontimer.view.activity;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,9 +11,6 @@ import android.view.View;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 
-import icepick.Icepick;
-import icepick.State;
-import rx.Observable;
 import rx.subjects.PublishSubject;
 import tokyo.tommykw.limontimer.R;
 import tokyo.tommykw.limontimer.databinding.ActivityMainBinding;
@@ -23,10 +18,7 @@ import tokyo.tommykw.limontimer.model.entity.TimerEntity;
 import tokyo.tommykw.limontimer.presenter.TimerPresenter;
 import tokyo.tommykw.limontimer.view.notification.LocalNotificationSender;
 
-public class MainActivity extends AppCompatActivity {
-    @State
-    private int selectedPosition;
-
+public class MainActivity extends BaseActivity {
     private ActivityMainBinding activityBinding;
     private static final int START_TIME = 50000;
     private static final int INTERVAL = 1;
@@ -37,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Icepick.restoreInstanceState(this, savedInstanceState);
-
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         TimerEntity timer = new TimerEntity(START_TIME / 1000, getString(R.string.timer_text_start));
         activityBinding.setTimer(timer);
@@ -56,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 .rippleAlpha(0.5f)
                 .rippleHover(true)
                 .create();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Icepick.saveInstanceState(this, outState);
     }
 
     private View.OnClickListener onClickTimerListener = (View v) -> {
