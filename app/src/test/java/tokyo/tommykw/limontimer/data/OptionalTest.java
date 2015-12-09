@@ -11,20 +11,22 @@ import rx.Observable;
  */
 public class OptionalTest {
     @Test
-    public void mapTest() throws Exception {
+    public void ofTest() throws Exception {
         {
             Observable<String> observable = Optional.of("hoge");
-            observable.subscribe(value -> assertThat("hoge", is("hoge")));
+            observable.map(value -> value.toUpperCase())
+                    .subscribe(val -> assertThat(val, is("HOGE")));
         }
 
         {
             Observable<Integer> observable = Optional.of(1);
             observable.subscribe(value -> assertThat(1, is(1)));
         }
+    }
 
-        {
-            Observable<Integer> observable = Optional.ofNullable(null);
-            observable.subscribe(value -> assertNull(value));
-        }
+    @Test
+    public void ofNullableTest() throws Exception {
+        Observable<Integer> observable = Optional.ofNullable(null);
+        observable.subscribe(value -> assertNull(value));
     }
 }
