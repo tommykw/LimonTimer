@@ -13,9 +13,9 @@ public class OptionalTest {
     @Test
     public void ofTest() throws Exception {
         {
-            Observable<String> observable = Optional.of("hoge");
+            Observable<String> observable = Optional.of("Timer");
             observable.map(value -> value.toUpperCase())
-                    .subscribe(val -> assertThat(val, is("HOGE")));
+                    .subscribe(val -> assertThat(val, is("TIMER")));
         }
 
         {
@@ -26,7 +26,45 @@ public class OptionalTest {
 
     @Test
     public void ofNullableTest() throws Exception {
-        Observable<Integer> observable = Optional.ofNullable(null);
-        observable.subscribe(value -> assertNull(value));
+        {
+            Observable<Integer> observable = Optional.ofNullable(null);
+            observable.subscribe(value -> assertNotNull(value));
+        }
+
+        {
+            Observable<Integer> observable = Optional.ofNullable(1);
+            observable.subscribe(value -> assertThat(value, is(1)));
+        }
+
+        {
+            Observable<String> observable = Optional.ofNullable("Timer");
+            observable.subscribe(value -> assertThat(value, is("Timer")));
+        }
+    }
+
+    @Test
+    public void getTest() throws Exception {
+        {
+            Observable<String> observable = Optional.of("Timer");
+            assertThat(Optional.get(observable), is("Timer"));
+        }
+
+        {
+            Observable<Boolean> observable = Optional.of(Boolean.TRUE);
+            assertTrue(Optional.get(observable));
+        }
+    }
+
+    @Test
+    public void orElseTest() throws Exception {
+        {
+            Observable<String> observable = Optional.ofNullable(null);
+            assertThat(Optional.orElse(observable, "default"), is("default"));
+        }
+
+        {
+            Observable<String> observable = Optional.of("Timer");
+            assertThat(Optional.orElse(observable, "default"), is("Timer"));
+        }
     }
 }

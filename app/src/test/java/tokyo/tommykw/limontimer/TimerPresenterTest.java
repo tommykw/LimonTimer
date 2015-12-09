@@ -4,11 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import tokyo.tommykw.limontimer.presenter.TimerPresenter;
 
 import static org.junit.Assert.*;
 
+@Config(manifest= Config.NONE)
 @RunWith(RobolectricTestRunner.class)
 public class TimerPresenterTest {
     private TimerPresenter p;
