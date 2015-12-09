@@ -16,3 +16,9 @@
 #   public *;
 #}
 -dontwarn java.lang.invoke.*
+
+-dontwarn icepick.**
+-keep class **$$Icepick { *; }
+-keepclasseswithmembernames class * {
+    @icepick.* <fields>;
+}
