@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+
 /**
  * Created by tommy on 15/11/15.
  */
@@ -16,6 +20,7 @@ public class TimerPresenter extends Presenter {
     private static final String ARG_KEY_START_TIME = "start_time";
     private static final String ARG_KEY_INTERVAL = "interval";
     private CountDownTimer countDownTimer;
+    private Timer timer;
     private long startTime;
     private long interval;
     private long currentTime;
@@ -55,6 +60,7 @@ public class TimerPresenter extends Presenter {
     @Override
     public void onDestroyView() {
         countDownTimer = null;
+        timer = null;
         timerListener = null;
         super.onDestroyView();
     }
@@ -64,22 +70,26 @@ public class TimerPresenter extends Presenter {
     }
 
     public void startTimer() {
-        countDownTimer = new CountDownTimer(currentTime, interval) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerListener.onTick(millisUntilFinished);
-                currentTime = millisUntilFinished;
-            }
+        Timer.toTick();
 
-            @Override
-            public void onFinish() {
-                timerListener.onFinish();
-                isFinished = true;
-                isRunning = false;
-                isStopped = true;
-            }
-        };
-        countDownTimer.start();
+
+
+//        countDownTimer = new CountDownTimer(currentTime, interval) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                timerListener.onTick(millisUntilFinished);
+//                currentTime = millisUntilFinished;
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                timerListener.onFinish();
+//                isFinished = true;
+//                isRunning = false;
+//                isStopped = true;
+//            }
+//        };
+//        countDownTimer.start();
         isRunning = true;
         isStopped = false;
     }

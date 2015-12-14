@@ -51,7 +51,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/shape_rounded_small"
-                    android:text="@{timer.buttonText}"/>
+                    android:text="@{timer.buttonText}"
+                    android:elevation="@dimen/elevation_small"
+                    />
             </com.balysv.materialripple.MaterialRippleLayout>
 
         </LinearLayout>
