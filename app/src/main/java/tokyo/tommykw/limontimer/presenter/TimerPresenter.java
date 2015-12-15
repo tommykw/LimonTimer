@@ -20,7 +20,7 @@ public class TimerPresenter extends Presenter {
     private static final String ARG_KEY_START_TIME = "start_time";
     private static final String ARG_KEY_INTERVAL = "interval";
     private CountDownTimer countDownTimer;
-    private Timer timer;
+    //private Timer timer;
     private long startTime;
     private long interval;
     private long currentTime;
@@ -60,7 +60,6 @@ public class TimerPresenter extends Presenter {
     @Override
     public void onDestroyView() {
         countDownTimer = null;
-        timer = null;
         timerListener = null;
         super.onDestroyView();
     }
@@ -70,26 +69,22 @@ public class TimerPresenter extends Presenter {
     }
 
     public void startTimer() {
-        Timer.toTick();
+        countDownTimer = new CountDownTimer(currentTime, interval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerListener.onTick(millisUntilFinished);
+                currentTime = millisUntilFinished;
+            }
 
-
-
-//        countDownTimer = new CountDownTimer(currentTime, interval) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                timerListener.onTick(millisUntilFinished);
-//                currentTime = millisUntilFinished;
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                timerListener.onFinish();
-//                isFinished = true;
-//                isRunning = false;
-//                isStopped = true;
-//            }
-//        };
-//        countDownTimer.start();
+            @Override
+            public void onFinish() {
+                timerListener.onFinish();
+                isFinished = true;
+                isRunning = false;
+                isStopped = true;
+            }
+        };
+        countDownTimer.start();
         isRunning = true;
         isStopped = false;
     }
