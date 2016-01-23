@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="12dp"
+    android:insetRight="12dp"
+    android:insetBottom="12dp"
+    android:insetLeft="12dp">
+
     <item>
         <shape android:shape="rectangle">
             <corners
@@ -13,4 +18,4 @@
                 />
         </shape>
     </item>
-</selector>
+</inset>
